@@ -1,0 +1,24 @@
+/*$(function() {
+	$('#task').panel({
+		title : '任务分配',
+		iconCls : 'icon-save',
+		fit : true,
+		collapsible : true,
+		border : false,
+		nowrap : true,
+		autoRowHeight : true,
+		striped : false,
+		fitColumns : true,
+		remoteSort : false,
+		pagination : true,
+		rownumbers : true,
+	});
+});*/
+/*jQuery(document).ready(function() {
+	
+	
+});*/
+function tang() {
+	$('#testWindow1').window('close');
+}
+

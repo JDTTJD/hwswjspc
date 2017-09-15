@@ -1,0 +1,96 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	request.setAttribute("ctx", basePath);
+%>
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>水文工程影像管理系统</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="applicable-device" content="mobile">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<link rel="icon" type="image/png" href="Content/i/favicon.png" />
+<link rel="apple-touch-icon-precomposed"
+	href="Content/i/app-icon72x72@2x.png" />
+<link href="Content/lib/weui.min.css" rel="stylesheet" />
+<link href="Content/css/jquery-weui.css" rel="stylesheet" />
+<link href="Content/css/style.css" rel="stylesheet" />
+<link href="Content/font/iconfont.css" rel="stylesheet" />
+<link href="Content/js/login.js" rel="stylesheet">
+</head>
+<body ontouchstart>
+
+	<header style="padding: 35px 0 0 0;">
+	<h1
+		style="text-align: center; font-size: 34px; color: #3cc51f; font-weight: 400; margin: 0 15%; ">系统登录</h1>
+	</header>
+	<div class="content">
+		<div class="content-block">
+			<form method="post" data-url="/Account/Login" id="formlogin">
+				<input id="imei" name="imei" type="hidden" value="" />
+				<div class="weui-cells weui-cells_form">
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<label class="weui-label">用户名</label>
+						</div>
+						<div class="weui-cell__bd weui-cell_primary">
+							<input class="weui-input" type="text" placeholder="请输入用户名"
+								name="username" id="username" value="">
+						</div>
+					</div>
+					<div class="weui-cell">
+						<div class="weui-cell__hd">
+							<label class="weui-label">密码</label>
+						</div>
+						<div class="weui-cell__bd weui-cell_primary">
+							<input class="weui-input" placeholder="请输入密码" type="password"
+								name="password" id="password" value="">
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<div class="weui-btn-area">
+				<a class="weui-btn weui-btn_primary" id="loginUser"
+				 href="/main.jsp">登录</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- <div class="weui-loadmore"  id="loadmore">
+    <i class="weui-loading"></i>
+    <span class="weui-loadmore__tips">正在加载</span>
+    weui-loadmore__tips
+</div> -->
+	<script type="text/javascript" src="Content/lib/jquery-2.1.4.js"></script>
+	<script src="Content/lib/fastclick.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			FastClick.attach(document.body);
+		});
+		$(document).ready(function() {
+			$("#loadmore").hide();
+		});
+	</script>
+	<script type="text/javascript" src="Content/js/jquery-weui.js"></script>
+	<script type="text/javascript" src="Content/js/mian.js?v=22"></script>
+	<script type="text/javascript">
+		function loginUser(){
+			alert();
+		}
+	</script>
+
+
+</body>
+</html>

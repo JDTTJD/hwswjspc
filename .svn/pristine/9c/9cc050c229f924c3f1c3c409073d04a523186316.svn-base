@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- namespace命名空间，作用是对sql进行分类化管理，进行sql隔离（对用户操作的语句就单纯对用户） -->
+<mapper namespace="cn.ystk.pro.tang.mapper.TangMapper">
+	<!-- <resultMap id="BaseResultMap" type="cn.ystk.pro.tang.entity.Tang"> 
+		<id column="id" property="id" /> <result column="username" property="username" 
+		/> <result column="userpass" property="userpass" /> <result column="userage" 
+		property="userage" /> </resultMap> -->
+	<select id="findTangById" parameterType="int"
+		resultType="cn.ystk.pro.tang.entity.Tang">
+		select * from tb_tang where id=#{id}
+	</select>
+	<select id="findTang" parameterType="int"
+		resultType="cn.ystk.pro.tang.entity.Tang">
+		select * from tb_tang
+	</select>
+	<insert id="saveTang" parameterType="cn.ystk.pro.tang.entity.Tang">
+		insert into
+		tb_tang(username,userpass,userage)
+		values(#{username},#{userpass},#{userage})
+	</insert>
+	<delete id="deleteTang" parameterType="int">
+		delete from tb_tang where id=#{id}
+	</delete>
+	<update id="updateTang" parameterType="cn.ystk.pro.tang.entity.Tang">
+		update tb_tang set username=#{username},userpass=#{userpass},userage=#{userage}
+		 where id=#{id}
+	</update>
+</mapper>

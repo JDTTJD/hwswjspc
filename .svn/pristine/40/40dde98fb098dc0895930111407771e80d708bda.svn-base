@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ystk.pro.log.mapper.LogMapper" >
+  <resultMap id="BaseResultMap" type="cn.ystk.pro.log.entity.Log" >
+    <id column="id" property="id"  />
+    <result column="userid" property="userid"  />
+    <result column="createdate" property="createdate" />
+    <result column="content" property="content"  />
+    <result column="operation" property="operation"  />
+  </resultMap>
+  <!-- 保存日志功能 -->
+    <insert id="saveLog"  parameterType="cn.ystk.pro.log.entity.Log"> 
+    	<selectKey resultType="int" order="BEFORE" keyProperty="id">
+         select seq_log.nextval as id from dual
+       </selectKey>
+    INSERT INTO tb_log(id,userid,createdate,content,operation)
+    VALUES(#{id,jdbcType=NUMERIC},#{userid,jdbcType=NUMERIC},#{createdate},#{content,jdbcType=VARCHAR},#{operation,jdbcType=NUMERIC})
+  </insert>
+</mapper>

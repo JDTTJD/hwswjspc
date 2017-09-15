@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ystk.pro.photo.mapper.PhotoMapper">
+	<resultMap id="BaseResultMap" type="cn.ystk.pro.photo.entity.Photo">
+		<result column="photoNo" property="photoNo" />
+		<result column="createUserId" property="createUserId" />
+		<result column="photoTime" property="photoTime" />
+		<result column="photoAddr" property="photoAddr" />
+		<result column="remark" property="remark" />
+	</resultMap>
+	<!-- 保存照片功能 -->
+	<insert id="savePhoto" parameterType="cn.ystk.pro.photo.entity.Photo">
+		INSERT INTO tb_photo(photoNo,createUserId,photoTime,photoAddr,remark)
+		VALUES(#{photoNo},#{createUserId},#{photoTime},#{photoAddr},#{remark})
+	</insert>
+
+	<!-- 分页查询实体类 -->
+	<select id="findByPage" parameterType="cn.ystk.pro.photo.entity.PhotoPage"
+		resultMap="BaseResultMap">
+		select top ${pageSize} * from tb_photo where photoNo not in (select top
+		(${pageSize} * ${firstRec}) photoNo from tb_photo
+		) 
+		    <if test="photoNo != null and photoNo!=''">and photoNo = #{photoNo}</if>
+			<if test="photoTime != null and photoTime!=''">and photoTime = #{photoTime}</if>
+			<choose>
+			<when test="roleType==1">
+			</when>
+			<otherwise>
+			and createUserId=#{createUserId}
+			</otherwise>
+			</choose>
+	</select>
+	<!-- 获得总的记录条数 -->
+	<select id="getCount" parameterType="cn.ystk.pro.photo.entity.PhotoPage"
+		resultType="Integer">
+		SELECT count(*) FROM tb_photo where 1=1
+		  <if test="photoNo != null and photoNo!=''">and photoNo = #{photoNo}</if>
+			<if test="photoTime != null and photoTime!=''">and photoTime = #{photoTime}</if>
+	</select>
+</mapper>

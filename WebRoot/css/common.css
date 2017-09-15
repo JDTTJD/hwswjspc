@@ -1,0 +1,17 @@
+.datagrid-cell,.datagrid-cell-group,.datagrid-header-rownumber,.datagrid-cell-rownumber
+{
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+}
+.inputTable {width:100%;border-left:1px solid #bbb; border-top:1px solid #bbb; table-layout:fixed; word-break:break-all;}
+.inputTable th {width: 100px;line-height: 30px;padding:5px 10px;text-align: right;font-weight: normal;color: #333;background:#f3f6f2;white-space: nowrap;border-right:1px solid #bbb;border-bottom:1px solid #bbb; vertical-align:top;}
+.inputTable th label{white-space: nowrap;}
+.inputTable .title th, .input .inputTable .title td {text-align: left;padding-left: 5px;}
+.inputTable td {/*font-size:16px;*/line-height: 30px;padding:5px 10px;color: #666666; background:#fff;border-right:1px solid #bbb;border-bottom:1px solid #bbb;}
+.inputTable td em{ margin-left:5px; vertical-align:middle;}
+.inputTable td a{ margin-left:5px; color:#0647a8; vertical-align:middle;}
+.inputTable td .formText{width:80%;}
+.inputTable td .formTextarea{width:80%;}
+.inputTable td .formText{border-top:1px solid #999;border-right:1px solid #e1e1e1;border-bottom:1px solid #e1e1e1;border-left:1px solid #999; vertical-align:middle;/*font-size:16px;*/ height:24px; line-height:24px; text-indent:10px;}
+.inputTable td .formText:hover{border:1px solid #ff9b1f;background-color:#fefbf7}
+.inputTable td .formText:focus{background-color:#fff8ef}

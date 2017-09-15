@@ -1,0 +1,248 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	request.setAttribute("ctx", basePath);
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>后台管理系统</title>
+<link href="${pageContext.request.contextPath }/css/default.css"
+	rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath }/css/common.css" />
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath }/js/themes/icon.css" />
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath }/js/themes/default/easyui.css" />
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/common/jquery-1.8.0.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/common/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/logined/user/userList.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/common/extendValidate.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/common/waitDialog.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/common/jsloading.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/logined/upload/ajaxfileupload.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/logined/upload/ajaxupload.js"></script>
+<script type="text/javascript">
+	var basePath = "${ctx}";
+</script>
+<body class="easyui-layout">
+	<div class="easyui-panel" data-options="fit:true,border:false"
+		style="background-color: #E1EDFF;">
+		<!--  <div id="merInfGridTB" data-options="region:'north'"
+		style="overflow: hidden;margin-top:3px;padding:0px;">
+		用户名：<input class="easyui-textbox" id="userName" style="width: 150px;" />
+		日期：<input class="easyui-textbox" id="date" style="width: 150px;" /> <a
+			href="javascript:void(0)" id="searchBtn" class="easyui-linkbutton"
+			data-options="iconCls:'icon-search',plain:true">查询</a>
+		</div> -->
+		<div data-options="region:'center'"
+			style="padding: 0px;width: 100%;height:100%;border:false">
+			<table id="user" toolbar="#tb" width='100%' height='100%'
+				toolbar="merInfGridTB" fit='true' class="easyui-datagrid">
+
+			</table>
+
+			<!--新加入的信息-->
+			<div id="tb">
+				<div>
+					<table>
+						<tr>
+							<td>用户名 ：</td>
+							<td><input class="easyui-textbox" id="userName"
+								name="userName" style="width: 150px" /></td>
+							<td>日期：</td>
+							<td><input class="easyui-datebox" id="date" name="date"
+								style="width: 150px" /></td>
+							<td><a href="#" class="easyui-linkbutton" id="searchBtn"
+								iconcls="icon-search"> 查  询</a></td>
+						</tr>
+					</table>
+				</div>
+				<div style="margin-top: 5px">
+					<a href="#" class="easyui-linkbutton" iconcls="icon-add"
+						plain="true" onclick="javascript:addUser();"> 新增</a>&nbsp;<a
+						href="#" class="easyui-linkbutton" iconcls="icon-edit"
+						plain="true" onclick="javascript:editUser();"> 编辑</a>&nbsp;<a
+						href="#" class="easyui-linkbutton" iconcls="icon-cancel"
+						plain="true" onclick="javascript:deleteUser();"> 删除</a>&nbsp;<a
+						href="#" class="easyui-linkbutton" iconcls="icon-out" plain="true"
+						onclick="javascript:importUser();"> 导入</a>&nbsp;<a href="#"
+						class="easyui-linkbutton" iconcls="icon-down" plain="true"
+						onclick="javascript:outUser();"> 导出</a>
+				</div>
+			</div>
+			<!-- 隐藏着的添加用户div,点击添加用户时,触发js中addUser(); -->
+			<div id="dlg" class="easyui-dialog" modal="true"
+				style="width: 600px; height: 280px;display:none;padding: 10px 20px;"
+				closed="true" buttons="#dlg-buttons">
+				<form id="fm" method="post">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0"
+						class="inputTable">
+						<tr>
+							<th>用户名</th>
+							<td><input name="username" value="" type="text"
+								class="easyui-validatebox"
+								style="width:100%;height:20px;border-radius:5px;border:1px solid #888888;"
+								maxlength="20" required="true" /></td>
+							<th>性别</th>
+							<td><label class="radio">男：<input name="sex"
+									value="1" checked="checked" type="radio"></label><label
+								class="radio">女：<input name="sex" value="2" type="radio" /></label></td>
+						</tr>
+						<tr>
+							<th>地址</th>
+							<td><input name="address" type="text"
+								class="easyui-validatebox"
+								data-options="required:true,validType:'chinese'"
+								style="width:100%;height:20px;border-radius:5px;border:1px solid #888888;"
+								maxlength="20" required="true" /></td>
+							<th>日期</th>
+							<td><input name="brithday" id="brithday" value=""
+								type="text" class="formText"
+								style="width:100%;height:25px;border-radius:5px;border: 1px;"
+								maxlength="100" /></td>
+						</tr>
+						<tr>
+							<th>电话号码</th>
+							<td colspan=""><input name="telephone" value="" type="text"
+								class="easyui-validatebox"
+								data-options="required:true,validType:'mobile'"
+								style="width: 100%;;height:20px;border-radius:7px;border:1px solid #888888;"
+								maxlength="300" required="true" /></td>
+							<th>特长</th>
+							<td colspan=""><select name="speciality"
+								style="border-radius:7px;border:1px solid #888888;background: transparent;width: 130px;padding: 5px;font-size: 16px;border: 1px solid #ccc;height: 30px;
+						"><option
+										value="1">体育</option>
+									<option value="2">美术</option>
+									<option value="3">音乐</option></select></td>
+						</tr>
+						<tr>
+							<th>角色</th>
+							<td colspan="3"><c:forEach items="${roleList}"
+									var="roleList">
+					${roleList.roleName}<input name="roleId" id="roleId"
+										value="${roleList.id}" type="checkbox">
+								</c:forEach>
+						</tr>
+					</table>
+					<input type="hidden" name="checkType" id="checkType" /> <input
+						type="hidden" name="id" id="id" />
+				</form>
+			</div>
+			<div id="dlg-buttons" closed="true" style="display:none;">
+				<a href="javascript:void(0)" class="easyui-linkbutton"
+					onclick="submitForm()" iconcls="icon-save">保存</a> <a
+					href="javascript:void(0)" class="easyui-linkbutton"
+					onclick="javascript:$('#dlg').dialog('close')"
+					iconcls="icon-cancel">取消</a>
+			</div>
+			<div id="importData" class="easyui-window" modal="true"
+				style="width: 600px; height: 280px;display:none;padding: 10px 20px;"
+				closed="true" buttons="#dlg-buttons">
+
+				<table width="100%" border="0" cellpadding="0" cellspacing="0"
+					class="inputTable">
+					<tr>
+						<td>用户导入</td>
+						<td><input id="fileupload" style="height: 30px;width:180px;"
+							name="fileupload" type="file" multiple="true" />&nbsp;<input
+							type="button" value="导入" style="width: 50px;height:30px;"
+							onclick="ajaxFileUpload()" /></td>
+					</tr>
+					<tr>
+						<td>模板下载</td>
+						<td><input type="button" value="点击下载" onclick="down()"></input></td>
+					</tr>
+					<tr>
+						<td>导入说明</td>
+						<td>支持xls,xlsx的导入</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+</body>
+<script type="text/javascript">
+	$('#brithday').datebox({
+		required : true
+	});
+	$('#date').datebox({});
+
+	/* function submitForm() {
+		$('#fm').form('submit', {
+			success : function(data) {
+				var data = eval('(' + data + ')');
+				if (data == 2) {
+					$.messager.alert("提示信息", "操作成功");
+					$("#dlg").dialog("close");
+					$("#user").datagrid("reload");
+					$("#user").datagrid("clearSelections");
+				} else {
+					$.messager.alert("提示信息", "操作失败");
+					$("#dlg").dialog("close");
+					$("#user").datagrid("reload");
+				}
+			}
+		});
+	} */
+	function submitForm() {
+		var isValid = $('#fm').form('validate');
+		if (!isValid) {
+			return false;
+		}
+		var chkbox = document.getElementsByName("roleId");
+		var roleIds = "";
+		var selLen = 0;
+		for (var i = 0; i < chkbox.length; i++) {
+			if (chkbox[i].checked) {
+				roleIds += chkbox[i].value + ",";
+				selLen++;
+			}
+		}
+		if (selLen == 0) {
+			$.messager.alert("操作提示", "角色没有选择!", "info");
+			return false;
+		}
+		$('#fm').form('submit', {
+			url : basePath + "/user/userAdd.action?roleIds=" + roleIds,
+			success : function(data) {
+				var data = eval('(' + data + ')');
+				if (data == 2) {
+					//	$.messager.alert("提示信息", "操作成功");
+					$("#dlg").dialog("close");
+					$("#user").datagrid("reload");
+					findUserList();
+					//	window.location.href=basePath+"user/redirectUserList.action";
+					$("#user").datagrid("clearSelections");
+				} else {
+					$.messager.alert("提示信息", "操作失败");
+					$("#dlg").dialog("close");
+					$("#user").datagrid("reload");
+				}
+			}
+		});
+	}
+	function down() {
+		window.location.href = basePath + "down/downFile.action";
+	}
+</script>
+
+</html>

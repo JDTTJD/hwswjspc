@@ -1,0 +1,19 @@
+<%@ page contentType="text/html; charset=utf-8" language="java" import="java.io.*"  errorPage="index.jsp"%>   
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://"
+            + request.getServerName() + ":" + request.getServerPort()
+            + path+"/" ;
+    request.setAttribute("ctx", basePath);  
+%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <script type="text/javascript">
+ var basePath ="${ctx}";
+</script>
+<script language="JavaScript"> 
+window.location.href="${ctx}rediectLoginPage.action";
+
+</script> 

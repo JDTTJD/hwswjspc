@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ystk.pro.user.mapper.UserMapper">
+	<resultMap id="BaseResultMap" type="cn.ystk.pro.user.entity.User">
+		<id column="id" property="id" />
+		<result column="username" property="username" />
+		<result column="password" property="password" />
+		<result column="birthday" property="birthday" />
+		<result column="speciality" property="speciality" />
+		<result column="createTime" property="createTime" />
+		<result column="updateTime" property="updateTime" />
+		<result column="createUserId" property="createUserId" />
+		<result column="updateUserId" property="updateUserId" />
+		<result column="isDelete" property="isDelete" />
+		<result column="telephone" property="telephone" />
+		<result column="sex" property="sex" />
+		<result column="address" property="address" />
+	</resultMap>
+	<!--oracle分页查询语句查询用户列表 -->
+	<select id="findByPage" parameterType="cn.ystk.pro.user.entity.UserPage"
+		resultMap="BaseResultMap">
+		       select top ${pageSize} * from tb_user where id not in (select top (${pageSize} * ${firstRec}) id from tb_user)
+	</select>
+	<!-- 获得总的记录条数 -->
+	<select id="getCount" parameterType="cn.ystk.pro.user.entity.UserPage"
+		resultType="Integer">
+	SELECT count(*) FROM tb_user
+	WHERE 1=1
+		<if test="user != null">
+			<if test="user.username != null and user.username!=''">and username = #{user.username}</if>
+			<if test="user.birthday != null">and birthday =#{user.birthday}</if>
+		</if>
+	</select>
+	<!-- 保存用户信息 -->
+	<insert id="saveUser" useGeneratedKeys="true" keyProperty="id" parameterType="cn.ystk.pro.user.entity.User">
+		INSERT INTO
+		tb_user(username,password,speciality,birthday,sex,address,telephone,createTime,updateTime,createUserId,updateUserId,isDelete)
+		VALUES(#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{speciality},#{birthday,jdbcType=DATE},#{sex},#{address,jdbcType=VARCHAR},#{telephone},#{createTime},#{updateTime},#{createUserId},#{updateUserId},#{isDelete})
+	</insert>
+	<!-- 删除用户信息 -->
+	<delete id="deleteUser" parameterType="Integer">
+		delete from tb_user where
+		id=#{value}
+	</delete>
+	<!-- 根据用户的id获取用户的信息 -->
+	<select id="findUserById" parameterType="Integer" resultMap="BaseResultMap">
+		select * from tb_user where id=#{value}
+	</select>
+	<!-- 修改用户信息 -->
+	<update id="updateUser" parameterType="cn.ystk.pro.user.entity.User">
+		UPDATE tb_user
+		<set>
+			<if test="username != null">username=#{username},</if>
+			<if test="password != null">password=#{password},</if>
+			<if test="sex != null">sex=#{sex},</if>
+			<if test="address != null">address=#{address},</if>
+			<if test="birthday != null">birthday=#{birthday},</if>
+			<if test="speciality != null">speciality=#{speciality},</if>
+			<if test="telephone != null">telephone=#{telephone},</if>
+			<if test="updateUserId != null">updateUserId=#{updateUserId},</if>
+			<if test="updateTime != null">updateTime=#{updateTime},</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+	<!-- 根据用户名和密码查询用户信息 -->
+	<select id="findUserByUserNameAndPass" parameterType="cn.ystk.pro.user.entity.User"
+		resultMap="BaseResultMap">
+		select * from tb_user where username=#{username} and
+		password=#{password}
+	</select>
+   <!-- 导出功能返回list -->
+   <select id="findUserListForOut" parameterType="cn.ystk.pro.user.entity.UserPage"
+		resultMap="BaseResultMap">
+		SELECT * FROM tb_user
+		WHERE 1=1
+		<if test="user != null">
+			<if test="user.username != null and user.username!=''">and username = #{user.username}</if>
+			<if test="user.birthday != null">and birthday =#{user.birthday}</if>
+		</if>
+	</select>
+</mapper>

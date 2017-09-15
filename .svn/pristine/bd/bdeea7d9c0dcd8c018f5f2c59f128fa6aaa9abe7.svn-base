@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ystk.pro.menu.mapper.MenuMapper" >
+  <resultMap id="BaseResultMap" type="cn.ystk.pro.menu.entity.Menu" >
+    <id column="menuId" property="menuId"  />
+    <result column="menuname" property="menuname"  />
+    <result column="icon" property="icon" />
+    <result column="url" property="url"  />
+    <result column="pid" property="pid"  />
+  </resultMap>
+  <!-- 保存菜单功能 -->
+    <insert id="saveMenu"  parameterType="cn.ystk.pro.menu.entity.Menu"> 
+    INSERT INTO tb_menu(menuname,icon,url,pid)
+    VALUES(#{menuname,jdbcType=VARCHAR},#{icon,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},#{pid,jdbcType=NUMERIC})
+  </insert>
+  
+  <!-- 根据父节点的id查找菜单 list-->
+   <select id="findMenuByPid" parameterType="Integer" resultMap="BaseResultMap">
+    select * from  tb_menu
+    WHERE pid=#{value}
+  </select>
+    <!-- 根据id查找menu-->
+   <select id="findMenuById" parameterType="Integer" resultMap="BaseResultMap">
+    select * from  tb_menu
+    WHERE menuId=#{value}
+  </select>
+  <!-- 查询菜单的所有list -->
+   <select id="findMenuList"  resultMap="BaseResultMap">
+    select * from  tb_menu
+  </select>
+   <!-- 分页查询实体类 -->
+   <select id="findByPage" parameterType="cn.ystk.pro.menu.entity.MenuPage" resultMap="BaseResultMap">
+ select top ${pageSize} * from tb_menu where menuId not in (select top (${pageSize} * ${firstRec}) menuId from tb_menu)
+  </select>
+  <!-- 获得总的记录条数 -->
+  <select id="getCount" parameterType="cn.ystk.pro.menu.entity.MenuPage" resultType="Integer">
+    SELECT count(*) FROM tb_menu
+  </select>
+  
+    <!-- 修改菜单 -->
+  <update id="updateMenu" parameterType="cn.ystk.pro.menu.entity.Menu" >
+    UPDATE tb_menu
+    <set>
+       <if test="menuname != null and menuname !=''">menuname=#{menuname},</if>
+       <if test="url != null and url !=''">url=#{url},</if>
+       <if test="icon != null and icon !=''">icon=#{icon},</if>
+       <if test="pid != null and pid !=''">pid=#{pid},</if>
+    </set>
+    WHERE menuId=#{menuId}
+  </update>
+  <!--删除菜单项  -->
+  <delete id="deleteMenu" parameterType="Integer">
+    delete from tb_menu where menuId=#{value}
+  </delete>
+  <!-- 根据模块的id查询模块列表-->
+  <select id="findMenuListByModuleIds" resultMap="BaseResultMap">  
+     select * from tb_menu where  menuId in  
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+    #{item}  
+    </foreach> 
+  </select>
+</mapper>

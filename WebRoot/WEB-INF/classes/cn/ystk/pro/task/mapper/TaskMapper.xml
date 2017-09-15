@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ystk.pro.task.mapper.TaskMapper">
+	<resultMap id="BaseResultMap" type="cn.ystk.pro.task.entity.Task">
+		<id column="id" property="id" />
+		<result column="taskName" property="taskName" />
+		<result column="roleId" property="roleId" />
+		<result column="taskContent" property="taskContent" />
+		<result column="createTime" property="createTime" />
+		<result column="createUserId" property="createUserId" />
+	</resultMap>
+	<!--  parameterType="int" -->
+	<select id="findTaskById"
+		resultType="cn.ystk.pro.task.entity.Task">
+		select * from tb_task
+	</select>
+	<insert id="saveTask" parameterType="cn.ystk.pro.task.entity.Task">
+		insert into
+		tb_task(taskName,roleId,taskContent,createTime,createUserId)
+		values(#{taskName},#{roleId},#{taskContent},#{createTime},#{createUserId})
+	</insert>
+	<update id="update" parameterType="cn.ystk.pro.task.entity.Task">
+		update tb_task
+		<set>
+			<if test="taskName!=null">taskName=#{taskName},</if>
+			<if test="taskContent!=null">taskContent=#{taskContent},</if>
+		</set>
+		where id=#{id}
+	</update>
+	<!-- 获得总的记录数 -->
+	<select id="getCount" parameterType="cn.ystk.pro.task.entity.TaskPage"
+		resultType="Integer">
+		select count(*) from tb_task where 1=1
+	</select>
+	<!-- 分页查询语句查询用户列表 -->
+	<select id="findByPage" parameterType="cn.ystk.pro.task.entity.TaskPage"
+		resultMap="BaseResultMap">
+		<!-- select * from tb_task and order by ${sort} ${order} -->
+		select top ${pageSize} * from tb_task where id not in (select top
+		(${pageSize} * ${firstRec}) id from
+		tb_task)
+	</select>
+	<delete id="deleteTasks" parameterType="Integer">
+		delete from tb_task where
+		id=#{value}
+	</delete>
+</mapper>

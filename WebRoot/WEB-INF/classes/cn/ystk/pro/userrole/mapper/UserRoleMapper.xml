@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ystk.pro.userrole.mapper.UserRoleMapper">
+	<resultMap id="BaseResultMap" type="cn.ystk.pro.userrole.entity.UserRole">
+		<id column="id" property="id" />
+		<result column="roleId" property="roleId" />
+		<result column="userId" property="userId" />
+		<result column="crudOperation" property="crudOperation" />
+	</resultMap>
+	<!-- 保存用户角色信息 -->
+	<insert id="saveUserRole" 
+		parameterType="cn.ystk.pro.userrole.entity.UserRole">
+		insert into
+		tb_user_role(roleId,userId,crudOperation)
+		VALUES(#{roleId},#{userId},#{crudOperation})
+	</insert>
+	<!-- 根据id删除用户角色信息-->
+	<delete id="deleteUserRole" parameterType="Integer">
+		delete from tb_user_role where id=#{value}
+	</delete>
+	<!-- 根据用户id删除用户角色信息 -->
+	<delete id="deleteUserRoleByUserId" parameterType="Integer">
+		delete from tb_user_role where userId=#{value}
+	</delete>
+	<!-- 根据用户的id获取用户角色信息 -->
+	<select id="findUserRoleByUserId" parameterType="Integer" resultMap="BaseResultMap">
+		select * from tb_user_role where userId=#{value}
+	</select>
+	<!-- 修改用户角色信息 -->
+	<update id="updateUserRole" parameterType="cn.ystk.pro.userrole.entity.UserRole">
+		UPDATE tb_user_role
+		<set>
+			<if test="roleId != null">roleId=#{roleId},</if>
+			<if test="userId != null">userId=#{userId},</if>
+			<if test="crudOperation != null">crudOperation=#{crudOperation},</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+</mapper>

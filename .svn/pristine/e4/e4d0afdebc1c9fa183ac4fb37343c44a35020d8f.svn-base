@@ -1,0 +1,4 @@
+jdbc.sqlserver.driver=com.microsoft.sqlserver.jdbc.SQLServerDriver
+jdbc.sqlserver.url=jdbc:sqlserver://localhost:1433;DatabaseName=hwswjs
+jdbc.sqlserver.username=sa
+jdbc.sqlserver.password=123

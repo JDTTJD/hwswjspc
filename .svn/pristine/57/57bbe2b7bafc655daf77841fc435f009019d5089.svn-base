@@ -1,0 +1,199 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+    <title>水文工程影像管理系统</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="applicable-device" content="mobile">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath }/Content/i/favicon.png" />
+    <link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath }/Content/i/app-icon72x72@2x.png" />
+    <link href="${pageContext.request.contextPath }/Content/lib/weui.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath }/Content/css/jquery-weui.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath }/Content/css/style.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath }/Content/font/iconfont.css" rel="stylesheet" />
+    
+</head>
+<body ontouchstart>    
+    
+<header class="bar bar-nav">
+    <h1 class="title">我的消息</h1>
+    <a href="javascript:;" onclick="javascript:history.back(-1);" class="icon pull-left"><i class="iconfont icon-fanhui"></i></a>
+    <a href="mine.jsp" class="icon pull-right"><i class="iconfont icon-wode"></i></a>
+</header>
+
+<div class="content" id="listwrap" data-role="0">
+    <div class="weui-panel weui-panel_access dashi_list_content">
+        <!--下拉刷新-->
+        <div class="weui-pull-to-refresh__layer">
+            <div class='weui-pull-to-refresh__arrow'></div>
+            <div class='weui-pull-to-refresh__preloader'></div>
+            <div class="down">下拉刷新</div>
+            <div class="up">释放刷新</div>
+            <div class="refresh">正在刷新</div>
+        </div>
+        <!--下拉刷新-->
+        <div class="weui-panel__bd div_sort_price" id="listbox" style="display: block">
+                <a href="/UCenter/MessageInfo/53" class="weui_media_box weui_media_appmsg postlist">
+                    <div class="weui_media_bd">
+                        <h4 class="weui_media_title">巡查任务通知</h4>
+                        <p class="weui_media_desc"></p>
+                    </div>
+                </a>
+                <a href="/UCenter/MessageInfo/51" class="weui_media_box weui_media_appmsg postlist">
+                    <div class="weui_media_bd">
+                        <h4 class="weui_media_title">巡查任务通知</h4>
+                        <p class="weui_media_desc"></p>
+                    </div>
+                </a>
+                <a href="/UCenter/MessageInfo/49" class="weui_media_box weui_media_appmsg postlist">
+                    <div class="weui_media_bd">
+                        <h4 class="weui_media_title">巡查任务通知</h4>
+                        <p class="weui_media_desc">测试</p>
+                    </div>
+                </a>
+                <a href="/UCenter/MessageInfo/48" class="weui_media_box weui_media_appmsg postlist">
+                    <div class="weui_media_bd">
+                        <h4 class="weui_media_title">巡查任务通知</h4>
+                        <p class="weui_media_desc">巡查测试</p>
+                    </div>
+                </a>
+                <a href="/UCenter/MessageInfo/44" class="weui_media_box weui_media_appmsg postlist">
+                    <div class="weui_media_bd">
+                        <h4 class="weui_media_title">支付申请待审批通知</h4>
+                        <p class="weui_media_desc">进行维养</p>
+                    </div>
+                </a>
+                <a href="/UCenter/MessageInfo/43" class="weui_media_box weui_media_appmsg postlist">
+                    <div class="weui_media_bd">
+                        <h4 class="weui_media_title">支付申请提交通知</h4>
+                        <p class="weui_media_desc">进行维养</p>
+                    </div>
+                </a>
+                <a href="/UCenter/MessageInfo/41" class="weui_media_box weui_media_appmsg postlist">
+                    <div class="weui_media_bd">
+                        <h4 class="weui_media_title">任务提交通知</h4>
+                        <p class="weui_media_desc"></p>
+                    </div>
+                </a>
+                <a href="/UCenter/MessageInfo/33" class="weui_media_box weui_media_appmsg postlist">
+                    <div class="weui_media_bd">
+                        <h4 class="weui_media_title"> 冰雹预警</h4>
+                        <p class="weui_media_desc">有冰雹</p>
+                    </div>
+                </a>
+                <a href="/UCenter/MessageInfo/22" class="weui_media_box weui_media_appmsg postlist">
+                    <div class="weui_media_bd">
+                        <h4 class="weui_media_title">支付申请待审批通知</h4>
+                        <p class="weui_media_desc"></p>
+                    </div>
+                </a>
+                <a href="/UCenter/MessageInfo/21" class="weui_media_box weui_media_appmsg postlist">
+                    <div class="weui_media_bd">
+                        <h4 class="weui_media_title">支付申请提交通知</h4>
+                        <p class="weui_media_desc"></p>
+                    </div>
+                </a>
+        </div>
+    </div>
+    <div class="weui-loadmore" id='infinite-1' style="display: none">
+        <!--如有需要可增加style="display: none"-->
+        <i class="weui-loading"></i>
+        <span class="weui-loadmore__tips">正在加载...*\(^_^)/*</span>
+    </div>
+</div>
+<div class="weui-tabbar">
+		<a href="main.jsp" class="weui-tabbar__item ">
+			<div class="weui-tabbar__icon">
+				<i class="iconfont icon-shouye"></i>
+			</div>
+			<p class="weui-tabbar__label">首 页</p>
+		</a> 
+		<a href="search.jsp" class="weui-tabbar__item ">
+			<div class="weui-tabbar__icon">
+				<i class="iconfont icon-sousuo"></i>
+			</div>
+			<p class="weui-tabbar__label">巡 查</p>
+		</a> 
+		<a href="message.jsp"
+			class="weui-tabbar__item weui-bar__item--on"> <!-- <span
+			class="weui-badge" style="position: absolute;right: 2em;"
+			id="message">0</span> -->
+			<div class="weui-tabbar__icon">
+				<i class="iconfont icon-xiaoxi"></i>
+			</div>
+			<p class="weui-tabbar__label">消息</p>
+		</a> <a href="mine.jsp" class="weui-tabbar__item ">
+			<div class="weui-tabbar__icon">
+				<i class="iconfont icon-wode"></i>
+			</div>
+			<p class="weui-tabbar__label">我 的</p>
+		</a>
+	</div>
+<div id="ringbell" style="display:none"></div>
+
+    <div class="weui-loadmore"  id="loadmore">
+    <i class="weui-loading"></i>
+    <span class="weui-loadmore__tips">正在加载</span>
+</div>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/Content/lib/jquery-2.1.4.js"></script>
+    <script src="${pageContext.request.contextPath }/Content/lib/fastclick.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            FastClick.attach(document.body);
+        });
+        $(document).ready(function () {
+            $("#loadmore").hide();
+        });
+    </script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/Content/js/jquery-weui.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/Content/js/mian.js?v=22"></script>
+    
+    <script type="text/javascript">
+        //滚动加载
+        var page = 1;
+        $(function () {
+            "use strict";
+            if ($("#infinite-1")[0]) {
+                var loading = false;
+                $(document.body).infinite().on("infinite", function () {
+                    $("#infinite-1").css('display', 'block');
+                    var statecode = $("#listwrap").attr('data-role');
+                    var url = "/UCenter/GetMoreList";
+                    if (loading) return;
+                    loading = true;
+                    $.post(url, { page: page + 1, statecode: statecode }, function (msg) {
+                        if (msg.status == '1') {
+                            setTimeout(function () {
+                                $("#listbox").append(msg.html);
+                                loading = false;
+                            }, 1500);   //模拟延迟
+                            page++;
+                        } else {
+                            $("#infinite-1").html("已无更多！");
+                        }
+                    })
+                });
+            };
+            //下拉刷新
+            if ($("#listwrap")[0]) {
+                $("#listwrap").pullToRefresh().on("pull-to-refresh", function () {
+                    setTimeout(function () {
+                        location.reload(true)
+                        $("#listwrap").pullToRefreshDone(); // 重置下拉刷新
+                    }, 1500);   //模拟延迟
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

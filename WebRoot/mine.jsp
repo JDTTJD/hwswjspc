@@ -1,0 +1,152 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>水文工程影像管理系统</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="applicable-device" content="mobile">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<link rel="icon" type="image/png"
+	href="${pageContext.request.contextPath }/Content/i/favicon.png" />
+<link rel="apple-touch-icon-precomposed"
+	href="${pageContext.request.contextPath }/Content/i/app-icon72x72@2x.png" />
+<link
+	href="${pageContext.request.contextPath }/Content/lib/weui.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath }/Content/css/jquery-weui.css"
+	rel="stylesheet" />
+<link href="${pageContext.request.contextPath }/Content/css/style.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath }/Content/font/iconfont.css"
+	rel="stylesheet" />
+
+</head>
+<body ontouchstart>
+
+	<header class="bar bar-nav">
+		<h1 class="title">个人中心</h1>
+		<a href="javascript:;" onclick="javascript:history.back(-1);"
+			class="icon pull-left"><i class="iconfont icon-fanhui"></i></a> <a
+			href="mine.jsp" class="icon pull-right"><i
+			class="iconfont icon-wode"></i></a>
+	</header>
+
+	<div class="content">
+		<div class="jiben">
+			<div class="tx_box">
+				<div class="tx">
+					<img class="tx"
+						src="${pageContext.request.contextPath }/Content/images/default_avatar_128_128.jpg"
+						alt="" />
+				</div>
+				<ul>
+					test21
+					<li>编号：xcj</li>
+					<!--<li></li>-->
+				</ul>
+				<div class="myinfo"></div>
+			</div>
+			<div class="clearfix"></div>
+
+		</div>
+		<div class="weui-cells">
+			<a class="weui-cell weui-cell_access" href="javascript:;">
+				<div class="weui-cell__bd weui-cell_primary">
+					<p>昵称</p>
+				</div> <span class="weui-cell__bd weui-cell_primary"> </span>
+			</a> <a class="weui-cell weui-cell_access" href="javascript:;">
+				<div class="weui-cell__bd weui-cell_primary">
+					<p>部门</p>
+				</div> <span class="weui-cell__bd weui-cell_primary"> 工管科 </span>
+			</a>
+		</div>
+		<div class="weui-cells">
+			<a class="weui-cell weui-cell_access" href="javascript:;">
+				<div class="weui-cell__bd weui-cell_primary">
+					<p>手机</p>
+				</div>
+				<div class="weui-cell__bd">13000000000</div>
+			</a> <a class="weui-cell weui-cell_access" href="javascript:;">
+				<div class="weui-cell__bd">
+					<p>生日</p>
+				</div>
+				<div class="weui-cell__bd"></div>
+			</a> <a class="weui-cell weui-cell_access" href="javascript:;">
+				<div class="weui-cell__bd">
+					<p>邮箱</p>
+				</div>
+				<div class="weui-cell__bd">&amp;nbsp;</div>
+			</a>
+		</div>
+		<div class="weui-btn-area">
+			<a class="weui-btn weui-btn_warn" href="phoneindex.jsp">退出登录</a>
+		</div>
+	</div>
+
+	<div class="weui-tabbar">
+		<a href="main.jsp" class="weui-tabbar__item ">
+			<div class="weui-tabbar__icon">
+				<i class="iconfont icon-shouye"></i>
+			</div>
+			<p class="weui-tabbar__label">首 页</p>
+		</a> <a href="search.jsp" class="weui-tabbar__item ">
+			<div class="weui-tabbar__icon">
+				<i class="iconfont icon-sousuo"></i>
+			</div>
+			<p class="weui-tabbar__label">巡 查</p>
+		</a> 
+		<a href="message.jsp"
+			class="weui-tabbar__item weui-bar__item--on"> <!-- <span
+			class="weui-badge" style="position: absolute;right: 2em;"
+			id="message">0</span> -->
+			<div class="weui-tabbar__icon">
+				<i class="iconfont icon-xiaoxi"></i>
+			</div>
+			<p class="weui-tabbar__label">消息</p>
+		</a>
+		 <a href="mine.jsp" class="weui-tabbar__item ">
+			<div class="weui-tabbar__icon">
+				<i class="iconfont icon-wode"></i>
+			</div>
+			<p class="weui-tabbar__label">我 的</p>
+		</a>
+	</div>
+	<div id="ringbell" style="display:none"></div>
+
+	<!-- <div class="weui-loadmore" id="loadmore">
+		<i class="weui-loading"></i> <span class="weui-loadmore__tips">正在加载</span>
+	</div> -->
+	<script type="text/javascript" src="${pageContext.request.contextPath }/Content/lib/jquery-2.1.4.js"></script>
+	<script src="${pageContext.request.contextPath }/Content/lib/fastclick.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			FastClick.attach(document.body);
+		});
+		$(document).ready(function() {
+			$("#loadmore").hide();
+		});
+	</script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath }/Content/js/jquery-weui.js"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath }/Content/js/mian.js?v=22"></script>
+
+	<script type="text/javascript">
+
+
+</script>
+
+
+</body>
+</html>

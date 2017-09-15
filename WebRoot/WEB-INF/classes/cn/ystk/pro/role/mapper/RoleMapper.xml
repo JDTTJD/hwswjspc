@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ystk.pro.role.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="cn.ystk.pro.role.entity.Role" >
+    <id column="id" property="id"/>
+    <result column="role_name" property="roleName"/>
+    <result column="role_des" property="roleDes"/>
+    <result column="role_priv_level" property="rolePrivLevel"/> 
+  </resultMap>   
+  <!-- 保存角色信息 -->  
+  <insert id="saveRole"  parameterType="cn.ystk.pro.role.entity.Role"> 
+    INSERT INTO tb_role(role_name,role_des,role_priv_level)
+    VALUES(#{jdbcType=NUMERIC},#{roleName,jdbcType=VARCHAR},#{roleDes,jdbcType=VARCHAR},#{rolePrivLevel,jdbcType=VARCHAR})
+  </insert> 
+  <!-- 修改角色 -->
+  <update id="updateRole" parameterType="cn.ystk.pro.role.entity.Role" >
+    UPDATE tb_role
+    <set>
+       <if test="roleName != null and roleName !=''">role_name=#{roleName},</if>
+       <if test="roleDes != null and roleDes !=''">role_des=#{roleDes},</if>
+       <if test="rolePrivLevel != null and rolePrivLevel !=''">role_priv_level=#{rolePrivLevel},</if>
+    </set>
+    WHERE id=#{id}
+  </update>
+  <!-- 分页查询 -->
+   <select id="findByPage" parameterType="cn.ystk.pro.role.entity.RolePage" resultMap="BaseResultMap">
+ select top ${pageSize} * from tb_role where id not in (select top (${pageSize} * ${firstRec}) id from tb_role)
+   </select>
+   <!-- 查询总数 -->
+  <select id="getCount" parameterType="cn.ystk.pro.role.entity.RolePage" resultType="Integer">
+   SELECT count(*) FROM tb_role
+   </select>
+   <!-- 删除角色信息 -->   
+   <delete id="deleteRole" parameterType="Integer">
+   delete from tb_role where id=#{value}
+   </delete>
+   <!-- 根据角色id查找角色对象 -->
+   <select id="findRoleById" parameterType="Integer" resultMap="BaseResultMap">
+   select * from tb_role where id=#{value,jdbcType=NUMERIC}
+   </select>
+   <!-- 得到角色的list -->
+   <select id="findRoleList"  resultMap="BaseResultMap">
+   select * from tb_role 
+   </select>
+   	<!-- 根据角色的id查询模块列表-->
+   <select id="findRoleListByRoleIds" resultMap="BaseResultMap">  
+     select * from tb_role where  id in  
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+    #{item}  
+    </foreach> 
+  </select>
+    <!-- 根据角色名称查找角色对象 -->
+   <select id="findRoleByRoleName" parameterType="String" resultMap="BaseResultMap">
+   select * from tb_role where role_name=#{value,jdbcType=VARCHAR}
+   </select>
+</mapper>

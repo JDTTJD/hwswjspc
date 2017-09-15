@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE  configuration
+PUBLIC  "-//mybatis.org//DTD   Config  3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 和spring整合以后这个标签就废除了，因为在spring中就配了 -->
+	<environments default="development">
+		<environment id="development">
+			<!-- 使用JDBC事务管理。由mybatis进行事务控制 -->
+			<transactionManager type="JDBC" />
+			<!-- 数据库连接池，由mybatis管理 -->
+			<dataSource type="POOLED">
+				<property name="driver"
+					value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+				<property name="url"
+					value="jdbc:sqlserver://localhost:1433; DatabaseName=hwswjs" />
+				<property name="username" value="sa" />
+				<property name="password" value="123" />
+			</dataSource>
+		</environment>
+	</environments>
+	<!-- 指定映射文件 -->
+	<!-- <typeAliases>
+		<package name="cn.ystk.pro.tang.entity.Tang" />
+	</typeAliases> -->
+	<mappers>
+		<mapper resource="cn/ystk/pro/tang/mapper/TangMapper.xml" />
+		<mapper resource="cn/ystk/pro/task/mapper/TaskMapper.xml" />
+	</mappers>
+</configuration>

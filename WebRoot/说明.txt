@@ -1,0 +1,120 @@
+1.table easyui-datagrid分页 有一个附加的分页控件，只需后台获取分页控件自动提交的两个参数rows（每页显示的记录数）和page（当前第几页）然后读取相应页数的记录，和总记录数total一块返回即可。
+2.table easyui-datagrid           
+       属性如下：
+                 1)title:该DataGrid面板的标题文本。
+                 2)iconCls:一个CSS类，将提供一个背景图片作为标题图标。
+                 3)border：当true时，显示该datagrid面板的边框。
+                 4)width:面板宽度，自动列宽。
+                 5)height:面板高度，自动列高。
+                 6)columns:该DataGrid列配置对象，查看column属性可获取更多信息。
+                 7)frozenColumns:跟Columns属性相同，但是这些列将会被固定在左边。
+                 8)striped:当true时，单元格显示条纹。默认false。
+                 9)method:通过该方法类型请求远程数据。默认post。
+                 10)nowrap:当true时，显示数据在同一行上。默认true。
+                 11)idField:说明哪个字段是一个标识字段。
+                 12)url:一个URL，从远程站点获取数据。
+                 13)loadMsg:当从远程站点加载数据时，显示一个提示信息。默认"Processing,please wait …"。自定义覆盖。
+                 14)pagination:当true时在DataGrid底部显示一个分页工具栏。默认false。
+                 15)rownumbers:当true时显示行号。默认false。
+                 16)singleSelect:当true时只允许当前选择一行。默认false。
+                 17)fit:当true时，设置大小以适应它的父容器。默认false。
+                 18)pageNumber:当设置分页属性时，初始化的页码编号。默认从1开始
+                 19)pageSize:当设置分页属性是，初始化的页面大小。默认10行
+                 20)pageList:当设置分页属性时，初始化页面的大小选择清单。默认[10,20,30,40,50]
+                 21)queryParams:当请求远程数据时，也可以发送额外的参数。
+                 22)sortName:定义哪列可以排序。
+                 23)sortOrder:定义列的排列顺序，只能是'asc'或'desc'。默认asc。
+                 Column属性如下：
+                 1)title:该列标题文本。
+                 2)field:该列对应的字段名称。
+                 3)width：列宽。
+                 4)rowspan:说明该单元格需要多少行数。
+                 5)colspan:说明该单元格需要多少列数。
+                 6)align:说明Column数据的对齐方式。'left'，'right'，'center' 都可以使用。
+                 7)sortable:当true时，允许该列进行排序。
+                 8)checkbox:当true时，允许该列出现checkbox。
+             事件如下：
+                 1)onLoadSuccess:当远程数据加载成功是激活。
+                 2)onLoadError:当远程数据加载发现一些错误时激活。
+                 3)onClickRow:当用户点击某行时激活，参数包含：
+                    rowIndex: 点击的行索引，从0开始。
+                    rowData: 点击行时对应的记录。
+                4)onDblClickRow:当用户双击某行时激活，参数包含：
+                    rowIndex: 点击的行索引，从0开始。
+                    rowData: 点击行时对应的记录。
+                5)onSortColumn:当用户对某列排序时激活，参数包含：
+                   sort:排序字段名称。
+                   order:排序字段类型。
+                6)onSelect:当用户选择某行时激活，参数包含:
+                   rowIndex: 点击的行索引，从0开始。
+                   rowData: 点击行时对应的记录。
+                7)onUnselect:当用户取消选择某行时激活，参数包含:
+                    rowIndex: 点击的行索引，从0开始。
+                    rowData: 点击行时对应的记录。
+             方法如下：
+                 1)options:返回选择对象。
+                 2)resize:重调大小，生成布局。
+                 3)reload:重新加载数据。
+                 4)fixColumnSize:固定列大小。
+                 5)loadData:加载本地数据，过去的行会被删除。
+                 6)getSelected:返回第一个选中行的记录，若未选返回null。
+                 7)getSelections:返回选中的所有行，当没有选择记录时将返回空数组。
+                 8)clearSelections:清除所有选项的选择状态。
+                 9)selectRow:选择一行，行索引从0开始。
+                10)selectRecord:通过传递一个ID值参数，选择一行。
+                11)unselectRow:取消选择一行。
+3.mysql动态条件模糊查询
+        <where>
+        <if test="title != null and title != ''">
+        and trainee.title like concat('%',#{title},'%')
+         </if>                
+         and trainee.aid = admin.aid
+        </where> 
+         order by 
+         trainee.time desc, trainee.tid                
+         limit 
+         #{firstPage}, 
+         #{rows};      
+oracle---------------------------------------------------------------------------
+ SELECT
+       *
+       FROM
+           user
+               WHERE
+                    name like '%'||#{name}||'%'
+SQLServer数据库--------------------------------------------------------------------
+      SELECT
+      *
+        FROM
+            user
+                 WHERE
+                      name like '%'+#{name}+'%'
+mysql数据库------------------------------------------------------------------------
+       SELECT
+          *
+            FROM
+                user
+                   WHERE
+                         name like CONCAT('%',#{name},'%')
+DB2数据库-------------------------------------------------------------------------
+      SELECT
+          *
+           FROM
+               user
+                  WHERE
+                        name like CONCAT('%',#{name},'%')
+
+         
+4.log4j建议只使用五个级别,级别顺序(由低到高): DEBUG < INFO < WARN < ERROR < FATAL
+
+    下控制台效率比较差,输出的多了,非常影响服务器性能.
+     调试程序用debug或更低的优先级,这样开发的时候可以尽量输出,方便调试.
+     正式部署之后,可以提高日志的级别,只输出关键信息.          
+5.pl/sql客户端的中文乱码问题解决
+  .配置环境变量
+      变量名：NLS_LANG
+      变量值：SIMPLIFIED CHINESE_CHINA.ZHS16GBK
+6.pl/sql不显示用户建立的表
+     在当前用户和全部用户切换一下
+7.%AXIS2_HOME%\bin\wsdl2java -uri http://127.0.0.1:8080/awyb/services/mySoapService?wsdl -p client -s -o stub
+其中-uri参数指定了wsdl文件的路径，可以是本地路径，也可以是网络路径。-p参数指定了生成的Java类的包名，-o参数指定了生成的一系列文件保存的根目录。在执行完上面的命令后，我们就会发现在当前目录下多了个stub目录，在./stub/src/client目录可以找到对应的客户端调用文件，这些文件复杂调用WebService，我们可以在程序中直接使用这些文件

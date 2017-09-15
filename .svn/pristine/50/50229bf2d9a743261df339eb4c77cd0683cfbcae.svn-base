@@ -1,0 +1,11 @@
+ ### \u8BBE\u7F6E###
+log4j.rootLogger = debug,ERROR,INFO,stdout,D,E,ACP_SDK_LOG,SDK_ERR_LOG,SDK_MSG_LOG
+log4j.appender.SDK_ERR_LOG=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.SDK_ERR_LOG.Threshold=debug
+log4j.appender.SDK_ERR_LOG.ImmediateFlush=true
+log4j.appender.SDK_ERR_LOG.DatePattern='.'yyyy-MM-dd
+log4j.appender.SDK_ERR_LOG.File=d\:\\logs\\pro-error.log
+log4j.appender.SDK_ERR_LOG.encoding=UTF-8
+log4j.appender.SDK_ERR_LOG.layout=org.apache.log4j.PatternLayout
+log4j.appender.SDK_ERR_LOG.layout.ConversionPattern=[(%d{yyyyMMddHHmmss})|(%c)]=[%m]%n
+

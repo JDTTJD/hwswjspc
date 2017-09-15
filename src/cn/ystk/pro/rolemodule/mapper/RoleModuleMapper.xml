@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ystk.pro.rolemodule.mapper.RoleModuleMapper">
+	<resultMap id="BaseResultMap" type="cn.ystk.pro.rolemodule.entity.RoleModule">
+		<id column="id" property="id" />
+		<result column="roleId" property="roleId" />
+		<result column="moduleId" property="moduleId" />
+		<result column="crudOperation" property="crudOperation" />
+	</resultMap>
+	<!-- 保存角色模块信息 -->
+	<insert id="saveRoleModule" 
+		parameterType="cn.ystk.pro.rolemodule.entity.RoleModule">
+		insert into
+		tb_role_module(roleId,moduleId,crudOperation)
+		VALUES(#{roleId},#{moduleId},#{crudOperation})
+	</insert>
+	<!-- 删除角色模块信息 -->
+	<delete id="deleteRoleModule" parameterType="Integer">
+		delete from tb_role_module where id=#{value}
+	</delete>
+	<!-- 删除角色模块信息根据角色id -->
+	<delete id="deleteRoleModuleByRoleId" parameterType="Integer">
+		delete from tb_role_module where roleId=#{value}
+	</delete>
+	<!-- 修改角色模块信息 -->
+	<update id="updateRoleModule" parameterType="cn.ystk.pro.rolemodule.entity.RoleModule">
+		UPDATE tb_role_module
+		<set>
+			<if test="roleId != null">roleId=#{roleId},</if>
+			<if test="moduleId != null">moduleId=#{moduleId},</if>
+			<if test="crudOperation != null">crudOperation=#{crudOperation},</if>
+		</set>
+		WHERE id=#{id}
+	</update>
+	<!--查询所有的角色模块 -->
+	<select id="findRoleModuleList" resultMap="BaseResultMap">
+	   select * from tb_role_module
+	</select>
+	<!-- 根据角色的id查询模块列表-->
+   <select id="findModuleListByRoleIds" resultMap="BaseResultMap">  
+     select * from tb_role_module where  roleId in  
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+    #{item}  
+    </foreach> 
+  </select>
+   <!-- 根据角色id查找模块list -->
+  <select id="findModuleListByRoleId" parameterType="Integer"  resultMap="BaseResultMap">  
+     select * from tb_role_module where roleId=#{value}
+  </select>  
+</mapper>

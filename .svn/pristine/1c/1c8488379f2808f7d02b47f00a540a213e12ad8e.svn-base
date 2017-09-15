@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ystk.pro.photodetains.mapper.PhotoDetainsMapper">
+	<resultMap id="BaseResultMap" type="cn.ystk.pro.photodetains.entity.PhotoDetains">
+		<id column="id" property="id"/>
+		<result column="photoNo" property="photoNo" />
+		<result column="url" property="url" />
+		<result column="photoName" property="photoName" />
+	</resultMap>
+	<!-- 保存照片详情功能 -->
+	<insert id="savePhotoDetains" parameterType="cn.ystk.pro.photodetains.entity.PhotoDetains">
+		INSERT INTO tb_photo_detains(photoName,url,photoName)
+		VALUES(#{photoName},#{url},#{photoName})
+	</insert>
+
+	<!-- 分页查询实体类 -->
+	<select id="findByPage" parameterType="cn.ystk.pro.photodetains.entity.PhotoDetainsPage"
+		resultMap="BaseResultMap">
+		select top ${pageSize} * from tb_photo_detains where id not in (select top
+		(${pageSize} * ${firstRec}) id from tb_photo_detains
+		) 
+		    <if test="photoNo != null and photoNo!=''">and photoNo = #{photoNo}</if>
+	</select>
+	<!-- 获得总的记录条数 -->
+	<select id="getCount" parameterType="cn.ystk.pro.photo.entity.PhotoPage"
+		resultType="Integer">
+		SELECT count(*) FROM tb_photo_detains where 1=1
+		  <if test="photoNo != null and photoNo!=''">and photoNo = #{photoNo}</if>
+	</select>
+	<!-- 根据id查找实体类 -->
+	<select id="findPhotoDetainsById" parameterType="Integer" resultMap="BaseResultMap">
+	    select * from  tb_photo_detains where id=#{value}
+	</select>
+</mapper>
